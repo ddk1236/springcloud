@@ -5,6 +5,7 @@ import com.fc.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
@@ -14,22 +15,35 @@ import java.util.List;
  * @date 2021/8/17
  */
 @RestController
+@RequestMapping("/provide")
 public class ProviderController {
 
     @Autowired
     public UserService userService;
 
-    @RequestMapping("/provide/hello")
+    @RequestMapping("/hello")
     public String provide(){
         System.out.println("服务提供者2");
         return "服务提供者2-----------------";
     }
 
-    @RequestMapping("/provide/user")
+    @RequestMapping("/user")
     public List<UserEntity> getUser(){
         List<UserEntity> entityList = userService.getBaseMapper().selectList(null);
 
         System.out.println("服务提供者2");
         return entityList;
+    }
+
+    @RequestMapping("/setUser")
+    public UserEntity setUser(@RequestParam("id") Long id,
+                              @RequestParam("age") Integer age,
+                              @RequestParam("name") String name){
+        UserEntity entity = new UserEntity();
+        entity.setId(id);
+        entity.setName(name);
+        entity.setAge(age);
+        System.out.println("服务提供者2");
+        return entity;
     }
 }
